@@ -1,5 +1,4 @@
 #Austin Semmel Project 2
-
 library(shiny)
 library(dplyr)
 library(ggplot2)
@@ -9,8 +8,7 @@ shinyUI(fluidPage(
   
   # Application title
   titlePanel( 
-    uiOutput("titleText"),
-    plotOutput("pogoLogo"),
+    uiOutput("titleText")
     ),
   
   # Sidebar 
