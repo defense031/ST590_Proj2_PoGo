@@ -1,33 +1,34 @@
-#
-# This is the user-interface definition of a Shiny web application. You can
-# run the application by clicking 'Run App' above.
-#
-# Find out more about building applications with Shiny here:
-# 
-#    http://shiny.rstudio.com/
-#
+#Austin Semmel Project 2
 
 library(shiny)
+library(dplyr)
+library(ggplot2)
+library(knitr)
 
-# Define UI for application that draws a histogram
 shinyUI(fluidPage(
   
   # Application title
-  titlePanel("Old Faithful Geyser Data"),
+  titlePanel( 
+    uiOutput("titleText"),
+    plotOutput("pogoLogo"),
+    ),
   
-  # Sidebar with a slider input for number of bins 
+  # Sidebar 
   sidebarLayout(
     sidebarPanel(
-       sliderInput("bins",
-                   "Number of bins:",
-                   min = 1,
-                   max = 50,
-                   value = 30)
+      textInput("bossName","What Pokemon are you battling against?"),
+      br(),
+     checkboxInput("leg","Do you want to include legendaries?",value=FALSE),
+      br(),
+    checkboxGroupInput("gens","Which Generations do you want to include?",
+                       choices=c("I","II","III","IV","V (unreleased)","Alolan","Mega (unreleased)")),
+    br(),
+    textInput("exclude","Type any Pokemon you don't want to include (separated by commas)")
     ),
-    
-    # Show a plot of the generated distribution
     mainPanel(
-       plotOutput("distPlot")
+      
+      plotOutput("DPSPlot"),
+      print(pogo[1,])
     )
   )
 ))
