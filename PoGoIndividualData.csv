@@ -3293,7 +3293,6 @@ Lileep,Rock,Grass,Acid,Poison,Ancient Power,Rock,132,105,172,6.026,103.9,626,"1,
 Squirtle,Water,,Bubble,Water,Aqua Tail,Water,88,94,130,6.013,58.9,354,808,1,FALSE,dodgerblue2
 Zubat,Poison,Flying,Bite,Dark,Sludge Bomb,Poison,80,83,79,6.009,36.1,216.6,569,1,FALSE,purple3
 Barboach,Water,Ground,Mud Shot,Ground,Mud Bomb,Ground,100,93,86,6.007,47,282.2,716,3,FALSE,dodgerblue2
-Wormadam,#N/A,#N/A,Bug Bite,Bug,Struggle,Normal,#N/A,#N/A,#N/A,6.005,138.2,829.7,"1,773",#N/A,#N/A,#N/A
 Spheal,Ice,Water,Water Gun,Water,Aurora Beam,Ice,140,95,100,6,67.8,406.6,876,3,FALSE,cyan2
 Pachirisu,Electric,,Volt Switch,Electric,Thunderbolt,Electric,120,94,175,5.998,132.3,793.8,"1,213",4,FALSE,yellow2
 Shellder,Water,,Tackle,Normal,Water Pulse,Water,60,116,181,5.996,57.1,342.5,958,1,FALSE,dodgerblue2
@@ -3421,7 +3420,6 @@ Electrike,Electric,,Quick Attack,Normal,Swift,Normal,80,123,80,5.593,34.3,191.8,
 Surskit,Bug,Water,Bubble,Water,Bubble Beam,Water,80,93,99,5.592,41.3,230.9,695,3,FALSE,darkgreen
 Onix,Rock,Ground,Rock Throw,Rock,Stone Edge,Rock,70,85,291,5.581,99.7,556.6,"1,002",1,FALSE,sienna4
 Eevee,Normal,,Tackle,Normal,Dig,Ground,110,104,126,5.58,65.8,367.3,969,1,FALSE,ivory2
-Wormadam,#N/A,#N/A,Tackle,Normal,Struggle,Normal,#N/A,#N/A,#N/A,5.58,128.4,716.4,"1,773",#N/A,#N/A,#N/A
 Igglybuff,Normal,Fairy,Feint Attack,Dark,Shadow Ball,Ghost,180,69,39,5.579,37,206.4,512,2,FALSE,ivory2
 Spinda,Normal,,Sucker Punch,Dark,Rock Tomb,Rock,120,116,120,5.578,68.5,381.8,"1,088",3,FALSE,ivory2
 Shellder,Water,,Ice Shard,Ice,Water Pulse,Water,60,116,181,5.574,53.1,295.9,958,1,FALSE,dodgerblue2
