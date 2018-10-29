@@ -14,19 +14,24 @@ shinyUI(fluidPage(
   # Sidebar 
   sidebarLayout(
     sidebarPanel(
-      textInput("bossName","What Pokemon are you battling against?"),
+      textInput("bossName","What Pokemon are you battling against?",value="Mewtwo"),
       br(),
      checkboxInput("leg","Do you want to include legendaries?",value=FALSE),
       br(),
-    checkboxGroupInput("gens","Which Generations do you want to include?",
-                       choices=c("I","II","III","IV","V (unreleased)","Alolan","Mega (unreleased)")),
+     #Generation conditional panel
+     checkboxInput("includeGens","Do you want to separate by Generation?",value=FALSE),
+     conditionalPanel(condition="input.includeGens=='1'",
+      checkboxGroupInput("gens","Which Generations do you want to include?",
+                       choices=c("I","II","III","IV","Alolan","V (unreleased)","Mega (unreleased)"))
+      ),
     br(),
     textInput("exclude","Type any Pokemon you don't want to include (separated by commas)")
     ),
+    #Main Panel
     mainPanel(
       
       plotOutput("DPSPlot"),
-      print(pogo[1,])
+      print(newData)
     )
   )
 ))
