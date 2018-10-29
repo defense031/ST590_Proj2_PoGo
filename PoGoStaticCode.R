@@ -37,7 +37,7 @@ bossType1<-as.character(pogo[which(pogo$Pokemon==bossName)[1],2])
 
 #Code to find type2 of raid boss
 bossType2<-ifelse(as.character(pogo[which(pogo$Pokemon==bossName)[1],3])=="","noType2",as.character(pogo[which(pogo$Pokemon==bossName)[1],3]))
-
+#Creates subset of advantages table with cols of boss type1 and type2 (if type2 is null, it returns a col of 1s for no modifier)
 bossAdvantages<-advantages[c(bossType1,bossType2)]
 
 #Initialize vector to catch fastType, fastAdv, chargeType
@@ -46,28 +46,30 @@ chargeAdv<-rep(0,length(pogo$Pokemon))
 totAdv<-rep(0,length(pogo$Pokemon))
 
 for(i in 1:length(pogo$Pokemon)){
-  mon<-as.character(pogo$Pokemon[i])
-  #Find fast type advantage
-  fastAdv[i]<-advantages[as.character(pogo[which(pogo$Pokemon==mon),5]),bossType1]*advantages[as.character(pogo[which(pogo$Pokemon==mon),5]),bossType2]
-  #Find charge type advantage
-  chargeAdv[i]<-advantages[as.character(pogo[which(pogo$Pokemon==mon),7]),bossType1]*advantages[as.character(pogo[which(pogo$Pokemon==mon),7]),bossType2]
-  #Find DPS Modifier
+  #Find fast type advantage for each Pokemon
+  fastAdv[i]<-bossAdvantages[as.character(pogo$FastType[i]),bossType1]*bossAdvantages[as.character(pogo$FastType[i]),bossType2]
+  #Find charge type advantage for each Pokemon
+  chargeAdv[i]<-bossAdvantages[as.character(pogo$ChargedMoveType[i],bossType1]*bossAdvantages[as.character(pogo$ChargedMoveType[i]),bossType2]
+  #Find DPS Modifier for each Pokemon
   totAdv[i]<-mean(c(chargeAdv[i],fastAdv[i]))
   pogo$newDPS[i]<-pogo$DPS[i]*totAdv[i]
 }
 
-
+#This works but is not the best way to do it...no reason to search for row of each pokemon...
+#Better to just call the index of each FastType and ChargedMoveType from within the data itself
+                                            
+                                            
 #Create DPS Modifier
 #Fast attack Type in col 5
 fastType<-as.character(pogo[which(pogo$Pokemon==mon),5])
-
 which(pogo$Pokemon==mon)
-
 as.character(pogo[which(pogo$Pokemon==mon),5])
 
 fastAdv<-advantages[fastType,bossType1]*advantages[fastType,bossType2]
 fastAdv
 
+#This would produce the same result for a snorlax with 2 different movesets.  
+#the first one would create the damage modifier and then would be the same throughout!
 #Charged attack type in col 7
 chargeType<-as.character(pogo[which(pogo$Pokemon==mon)[1],7])
 chargeAdv<-advantages[chargeType,bossType1]*advantages[chargeType,bossType2]
