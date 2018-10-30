@@ -29,7 +29,7 @@ url3<-"https://raw.githubusercontent.com/defense031/ST590_Proj2_PoGo/master/Poke
 pogoLogo<-readPNG(getURLContent(url3))
 include_graphics(pogoLogo)
 
-bossName<-"Charizard"
+bossName<-"Mewtwo"
 
 
 #Code to find type1 of raid boss
@@ -50,22 +50,43 @@ fastAdv<-rep(0,length(pogo$Pokemon))
 chargeAdv<-rep(0,length(pogo$Pokemon))
 totAdv<-rep(0,length(pogo$Pokemon))
 
-for(i in 1:length(pogo$Pokemon)){
+for(i in 1:length(newData$Pokemon)){
   #Find fast type advantage for each Pokemon
   fastAdv[i]<-bossAdvantages[as.character(pogo$FastType[i]),bossType1]*bossAdvantages[as.character(pogo$FastType[i]),bossType2]
   #Find charge type advantage for each Pokemon
   chargeAdv[i]<-bossAdvantages[as.character(pogo$ChargedMoveType[i]),bossType1] * bossAdvantages[as.character(pogo$ChargedMoveType[i]),bossType2]
   #Find DPS Modifier for each Pokemon
   totAdv[i]<-mean(c(chargeAdv[i],fastAdv[i]))
-  pogo$newDPS[i]<-pogo$DPS[i]*totAdv[i]
+  newData$newDPS[i]<-pogo$DPS[i]*totAdv[i]
 }
 
-pogo$newDPS
+newData$newDPS
+top10<-arrange(newData,desc(newDPS))[1:10,]
+nameCat<-paste0(top10$Pokemon," ",top10$FastMove," ",top10$ChargedMove)
+top10<-cbind(top10,nameCat)
 
-g<-pogo%>%ggplot()
-g+geom_point(aes(x=pogo$Type1,y=pogo$newDPS))
 
-#This works but is not the best way to do it...no reason to search for row of each pokemon...
-#Better to just call the index of each FastType and ChargedMoveType from within the data itself
-                                            
+g<-ggplot(data=top10)
+g+geom_point(aes(x=top10$nameCat,y=top10$newDPS),color=top10$TypeColor,
+             size=10*percent_rank(top10$TDO))+
+  theme(axis.text.x=element_text(angle=60,hjust=1))+
+  xlab("")+ylab("Adjusted DPS")
+  
+
+sumTable<-top10[,c(1,2,3,4,6,8,9,10,18,12)]
+sumTable[,9]<-round(sumTable[,9],digits=1)
+colnames(sumTable)<-c("Pokemon","Type 1", "Type 2","Fast Move", "Charged Move","Stamina","Attack","Defense","Total Damage Output","Adj. DPS")
+sumTable
+
+leg=FALSE
+
+if(leg==FALSE){
+  filterData<-filter(newData,Legendary==FALSE)
+}else{filterData<-pogo}
+
+length(filterData$Pokemon)
+
+
+
+
        

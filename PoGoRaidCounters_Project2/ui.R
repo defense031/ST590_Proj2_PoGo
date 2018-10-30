@@ -3,8 +3,9 @@ library(shiny)
 library(dplyr)
 library(ggplot2)
 library(knitr)
+library(shinythemes)
 
-shinyUI(fluidPage(
+shinyUI(fluidPage(theme=shinytheme("darkly"),
   
   # Application title
   titlePanel( 
@@ -16,7 +17,7 @@ shinyUI(fluidPage(
     sidebarPanel(
       textInput("bossName","What Pokemon are you battling against?",value="Charizard"),
       br(),
-     checkboxInput("leg","Do you want to include legendaries?",value=FALSE),
+     checkboxInput("leg","Do you want to include legendaries?",value=TRUE),
       br(),
      #Generation conditional panel
      checkboxInput("includeGens","Do you want to separate by Generation?",value=FALSE),
@@ -24,18 +25,14 @@ shinyUI(fluidPage(
       checkboxGroupInput("gens","Which Generations do you want to include?",
                        choices=c("I","II","III","IV","Alolan","V (unreleased)","Mega (unreleased)"))
       ),
-    br(),
-    textInput("exclude","Type any Pokemon you don't want to include (separated by commas)")
+    br()
     ),
     #Main Panel
     mainPanel(
       
-      #plotOutput("DPSPlot"),
-      tableOutput("DPStable"),
-      head(newData),
-      length(newData$newDPS),
-      length(newData$Type1),
-      print(newData)[65,]
+      plotOutput("DPSPlot"),
+      tableOutput("DPStable")
+      
       
     )
   )
