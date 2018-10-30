@@ -43,9 +43,24 @@ shinyServer(function(input, output) {
 
 getData<- reactive({
   
-  if(input$leg==FALSE){
-    filterData<-filter(newData,Legendary==FALSE)
-  }else{filterData<-pogo}
+  #If not sorting by generation
+  if(input$includeGens==FALSE){
+    #filter by legendary yes/no
+      if(input$leg==FALSE){
+        filterData<-filter(newData,Legendary==FALSE)
+      }else{filterData<-pogo}
+    #If sorting by generation
+  }else{
+    #sorting by generation with legendary selected FALSE
+    if(input$leg==FALSE){
+      filterData<-filter(newData[newData$Generation %in% input$gens,])
+      filterData<-filter(filterData,Legendary==FALSE)
+                         
+      #sorting by generation with legendary selected TRUE
+    }else{filterDaya<-filter(newData[newData$Generation %in% input$gens,])
+    }
+  }
+  
 
   #Code to find type1 of raid boss
   bossType1<-as.character(pogo[which(pogo$Pokemon==input$bossName)[1],2])

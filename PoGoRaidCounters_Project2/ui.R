@@ -23,7 +23,7 @@ shinyUI(fluidPage(theme=shinytheme("darkly"),
      checkboxInput("includeGens","Do you want to separate by Generation?",value=FALSE),
      conditionalPanel(condition="input.includeGens=='1'",
       checkboxGroupInput("gens","Which Generations do you want to include?",
-                       choices=c("I","II","III","IV","Alolan","V (unreleased)","Mega (unreleased)"))
+                       choices=levels(pogo$Generation),inline=TRUE)
       ),
     br()
     ),

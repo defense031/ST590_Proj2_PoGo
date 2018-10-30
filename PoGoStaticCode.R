@@ -84,9 +84,21 @@ if(leg==FALSE){
   filterData<-filter(newData,Legendary==FALSE)
 }else{filterData<-pogo}
 
+gens<-c("I","II")
+filterData<-filter(newData,Legendary==FALSE & Generation %in% switch())
+
+
+a<-c("I","III")
+switch(a,"I"=1,"II"=2,"III"=3,"IV"=4,"V (unreleased)"=5,
+       "Mega (unreleased)"="Mega","Alolan"="Alolan")
+
+levels(pogo$Generation)
+
+
+gens<-c("1","3","2")
+filterData<-filter(newData,Legendary==FALSE)
+                   
+filterData<-filter(newData[newData$Generation %in% gens,])
+filterData<-filter(filterData,Legendary==FALSE)
 length(filterData$Pokemon)
-
-
-
-
        
