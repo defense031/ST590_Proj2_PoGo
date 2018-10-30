@@ -14,7 +14,7 @@ shinyUI(fluidPage(
   # Sidebar 
   sidebarLayout(
     sidebarPanel(
-      textInput("bossName","What Pokemon are you battling against?",value="Mewtwo"),
+      textInput("bossName","What Pokemon are you battling against?",value="Charizard"),
       br(),
      checkboxInput("leg","Do you want to include legendaries?",value=FALSE),
       br(),
@@ -30,8 +30,13 @@ shinyUI(fluidPage(
     #Main Panel
     mainPanel(
       
-      plotOutput("DPSPlot"),
-      print(newData)
+      #plotOutput("DPSPlot"),
+      tableOutput("DPStable"),
+      head(newData),
+      length(newData$newDPS),
+      length(newData$Type1),
+      print(newData)[65,]
+      
     )
   )
 ))
