@@ -25,20 +25,20 @@ pogo<-cbind(pogo,newDPS,fastAdv,chargeAdv,totAdv)
 newData<-pogo
 
 # Define server logic required to draw a histogram
-shinyServer(function(input, output) {
+shinyServer(function(input, output, session) {
   
   #Create title page
   output$titleText<-renderUI({
-    text<-paste0("Best Pokemon Go Raid Counters against of ",str_to_title(input$bossName))
+    text<-paste0("Best Pokemon Go Raid Counters against ",str_to_title(input$bossName))
     h3(text)
   })
   
   #Pokemon Go image
-  #url3<-"https://raw.githubusercontent.com/defense031/ST590_Proj2_PoGo/master/Pokemon_GO_logo.svg.png"
-  #output$pogoLogo<-renderPlot({
-    #readPNG(getURLContent(url3))
-    #dev.off()
-  #})
+  url3<-"https://raw.githubusercontent.com/defense031/ST590_Proj2_PoGo/master/Pokemon_GO_logo.svg.png"
+  output$pogoLogo<-renderPlot({
+    readPNG(getURLContent(url3))
+    dev.off()
+  })
   
 
 getData<- reactive({
@@ -57,7 +57,7 @@ getData<- reactive({
       filterData<-filter(filterData,Legendary==FALSE)
                          
       #sorting by generation with legendary selected TRUE
-    }else{filterDaya<-filter(newData[newData$Generation %in% input$gens,])
+    }else{filterData<-filter(newData[newData$Generation %in% input$gens,])
     }
   }
   

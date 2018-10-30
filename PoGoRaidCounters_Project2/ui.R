@@ -4,17 +4,31 @@ library(dplyr)
 library(ggplot2)
 library(knitr)
 library(shinythemes)
+library(shinydashboard)
+library(shinydashboardPlus)
 
-shinyUI(fluidPage(theme=shinytheme("darkly"),
+shinyUI(dashboardPagePlus(skin="blue",
   
   # Application title
-  titlePanel( 
-    uiOutput("titleText")
-    ),
-  
+  dashboardHeaderPlus( 
+    title=uiOutput("titleText"),
+    titleWidth=700,
+    tags$li(class = "dropdown",
+            tags$style(".main-header {max-height: 75}"),
+            tags$style(".main-header .logo {height: 75;}"),
+            tags$style(".sidebar-toggle {height: 75; padding-top: 1px !important;}"),
+            tags$style(".navbar {min-height:75 !important}")
+    )
+  ),
   # Sidebar 
-  sidebarLayout(
-    sidebarPanel(
+  dashboardSidebar(
+    sidebarMenu(
+      menuItem("About this App", tabname="about",icon=icon("question",lib="font-awesome")),
+      menuItem("Dashboard", tabName = "dashboard", icon = icon("dashboard")),
+      menuItem("Data", icon = icon("th"), tabName = "data")
+    ),
+      br(),
+      br(),
       textInput("bossName","What Pokemon are you battling against?",value="Charizard"),
       br(),
      checkboxInput("leg","Do you want to include legendaries?",value=TRUE),
@@ -24,16 +38,21 @@ shinyUI(fluidPage(theme=shinytheme("darkly"),
      conditionalPanel(condition="input.includeGens=='1'",
       checkboxGroupInput("gens","Which Generations do you want to include?",
                        choices=levels(pogo$Generation),inline=TRUE)
-      ),
-    br()
+      )
     ),
     #Main Panel
-    mainPanel(
-      
-      plotOutput("DPSPlot"),
-      tableOutput("DPStable")
-      
-      
+    dashboardBody(
+      tabItems(
+          tabItem(tabName="about"
+                  #textOutput("firstInfo"))
+          ),
+          tabItem(tabName = "dashboard",
+              fluidRow(plotOutput("DPSPlot"))
+          ),
+          tabItem(tabName="data",
+              fluidRow(tableOutput("DPStable"))
+          )
     )
-  )
-))
+    )
+)
+)
