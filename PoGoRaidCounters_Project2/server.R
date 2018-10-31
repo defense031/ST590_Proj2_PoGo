@@ -111,12 +111,20 @@ getData<- reactive({
   })
   
 #Download Data
-
-  
-
-  
-  
-  
+  datasetInput <- reactive({
+    switch(input$dataset,
+           "Top Counters" = getData(),
+           "Full Dataset" = pogo
+           )
+  })
+  output$downloadData <- downloadHandler(
+    filename = function() {
+      paste(input$dataset, ".csv", sep = "")
+    },
+    content = function(file) {
+      write.csv(datasetInput(), file)
+    }
+  )
   
 #End of app
 })

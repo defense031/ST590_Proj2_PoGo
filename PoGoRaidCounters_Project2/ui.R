@@ -7,6 +7,9 @@ library(shinythemes)
 library(shinydashboard)
 library(shinydashboardPlus)
 
+url2<-"https://raw.githubusercontent.com/defense031/ST590_Proj2_PoGo/master/PoGoIndividualData.csv"
+pogo<-read.csv(text=getURL(url2),header=TRUE)
+
 shinyUI(dashboardPagePlus(skin="blue",
   
   # Application title
