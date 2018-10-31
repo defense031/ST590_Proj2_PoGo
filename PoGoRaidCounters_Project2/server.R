@@ -81,21 +81,21 @@ getData<- reactive({
     filterData$totAdv[i]<-mean(c(filterData$chargeAdv[i],filterData$fastAdv[i]))
     filterData$newDPS[i]<-filterData$DPS[i]*filterData$totAdv[i]
   }
-  #Now find top 10 in adjusted DPS vs raid boss
-  top10<-arrange(filterData,desc(newDPS))[1:10,]
-  nameCat<-paste0(top10$Pokemon," ",top10$FastMove," ",top10$ChargedMove)
-  top10<-cbind(top10,nameCat)
-  top10<-top10
+  #Now find top n in adjusted DPS vs raid boss
+  top<-arrange(filterData,desc(newDPS))[1:input$numMon,]
+  nameCat<-paste0(top$Pokemon," ",top$FastMove," ",top$ChargedMove)
+  top<-cbind(top,nameCat)
+  top<-top
   
 })
 
 
 #Create plot
   output$DPSPlot<-renderPlot({
-    top10<-getData()
-    g<-ggplot(data=top10)
-    g+geom_point(aes(x=top10$nameCat,y=top10$newDPS),color=top10$TypeColor,
-                 size=10*percent_rank(top10$TDO))+
+    top<-getData()
+    g<-ggplot(data=top)
+    g+geom_point(aes(x=top$nameCat,y=top$newDPS),color=top$TypeColor,
+                 size=10*percent_rank(top$TDO))+
       theme_solarized()+
       theme(axis.text.x=element_text(angle=60,hjust=1))+
       xlab("")+ylab("Adjusted DPS")
@@ -103,8 +103,8 @@ getData<- reactive({
   
 #Create output of observations    
   output$DPStable <- renderTable({
-    top10<-getData()
-    sumTable<-top10[,c(1,2,3,4,6,8,9,10,18,12,16)]
+    top<-getData()
+    sumTable<-top[,c(1,2,3,4,6,8,9,10,18,12,16)]
     sumTable[,9]<-round(sumTable[,9],digits=1)
     colnames(sumTable)<-c("Pokemon","Type 1", "Type 2","Fast Move", "Charged Move","Stamina","Attack","Defense","Adj. DPS","Total Damage Output","Leg.")
     sumTable

@@ -28,7 +28,7 @@ shinyUI(dashboardPagePlus(skin="blue",
     sidebarMenu(
       menuItem("About this App", tabname="about",icon=icon("question",lib="font-awesome")),
       menuItem("Dashboard", tabName = "dashboard", icon = icon("dashboard")),
-      menuItem("Data", icon = icon("th"), tabName = "data")
+      menuItem("Data", tabName = "data",icon = icon("th"))
     ),
       br(),
       br(),
@@ -41,19 +41,26 @@ shinyUI(dashboardPagePlus(skin="blue",
      conditionalPanel(condition="input.includeGens=='1'",
       checkboxGroupInput("gens","Which Generations do you want to include?",
                        choices=levels(pogo$Generation),inline=TRUE)
-      )
+      ),
+    sliderInput(inputId="numMon",
+                label="How many counters would you like to display?",
+                min = 6,
+                max = 12,
+                value = 6
+    )
     ),
     #Main Panel
     dashboardBody(
       tabItems(
           tabItem(tabName="about"
-                  #textOutput("firstInfo"))
+                
           ),
           tabItem(tabName = "dashboard",
+              h3("Plot of Top Adjusted DPS"),
               fluidRow(plotOutput("DPSPlot"))
-              
           ),
           tabItem(tabName="data",
+              h3("Top 'Mon"),
               fluidRow(tableOutput("DPStable")),
               selectInput("dataset", "Choose a dataset:",
                           choices = c("Top Counters","Full Dataset")),
