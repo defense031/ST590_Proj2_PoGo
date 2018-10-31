@@ -5,6 +5,7 @@ library(ggplot2)
 library(knitr)
 library(shinythemes)
 library(shinydashboard)
+library(RCurl)
 library(shinydashboardPlus)
 
 url2<-"https://raw.githubusercontent.com/defense031/ST590_Proj2_PoGo/master/PoGoIndividualData.csv"
