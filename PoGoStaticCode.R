@@ -5,7 +5,7 @@ library(tidyverse)
 library(RCurl)
 library(png)
 library(knitr)
-
+library(ggthemes)
 
 
 
@@ -101,4 +101,5 @@ filterData<-filter(newData,Legendary==FALSE)
 filterData<-filter(newData[newData$Generation %in% gens,])
 filterData<-filter(filterData,Legendary==FALSE)
 length(filterData$Pokemon)
-       
+
+

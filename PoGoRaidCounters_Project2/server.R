@@ -6,6 +6,7 @@ library(tidyverse)
 library(RCurl)
 library(png)
 library(knitr)
+library(ggthemes)
 
 
 #Read in advantages chart
@@ -95,6 +96,7 @@ getData<- reactive({
     g<-ggplot(data=top10)
     g+geom_point(aes(x=top10$nameCat,y=top10$newDPS),color=top10$TypeColor,
                  size=10*percent_rank(top10$TDO))+
+      theme_solarized()+
       theme(axis.text.x=element_text(angle=60,hjust=1))+
       xlab("")+ylab("Adjusted DPS")
   })
@@ -108,6 +110,15 @@ getData<- reactive({
     sumTable
   })
   
+#Download Data
+
+  
+
+  
+  
+  
+  
+#End of app
 })
   
 

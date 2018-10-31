@@ -48,9 +48,13 @@ shinyUI(dashboardPagePlus(skin="blue",
           ),
           tabItem(tabName = "dashboard",
               fluidRow(plotOutput("DPSPlot"))
+              
           ),
           tabItem(tabName="data",
-              fluidRow(tableOutput("DPStable"))
+              fluidRow(tableOutput("DPStable")),
+              selectInput("dataset", "Choose a dataset:",
+                          choices = c("Top Counters","Full Dataset")),
+              downloadButton("downloadData","Download Data")
           )
     )
     )
