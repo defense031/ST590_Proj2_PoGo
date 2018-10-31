@@ -25,6 +25,9 @@ totAdv<-rep(0,length(pogo$Pokemon))
 pogo<-cbind(pogo,newDPS,fastAdv,chargeAdv,totAdv)
 newData<-pogo
 
+#Read in damage mechanics external URL
+url3<-a("Damage Mechanics", href="https://pokemongo.gamepress.gg/damage-mechanics")
+
 # Define server logic required to draw a histogram
 shinyServer(function(input, output, session) {
   
@@ -34,11 +37,15 @@ shinyServer(function(input, output, session) {
     h3(text)
   })
   
-  #Pokemon Go image
-  url3<-"https://raw.githubusercontent.com/defense031/ST590_Proj2_PoGo/master/Pokemon_GO_logo.svg.png"
-  output$pogoLogo<-renderPlot({
-    readPNG(getURLContent(url3))
-    dev.off()
+  #Create function that outputs bossName
+  output$name<-renderUI({
+    text2<-paste0(input$bossName)
+    h4(text2)
+  })
+
+  #Create link for info page
+  output$link <- renderUI({
+    tagList("URL link:", url3)
   })
   
 
@@ -61,7 +68,6 @@ getData<- reactive({
     }else{filterData<-filter(newData[newData$Generation %in% input$gens,])
     }
   }
-  
 
   #Code to find type1 of raid boss
   bossType1<-as.character(pogo[which(pogo$Pokemon==input$bossName)[1],2])
@@ -90,7 +96,7 @@ getData<- reactive({
 })
 
 
-#Create plot
+#Create DPS plot
   output$DPSPlot<-renderPlot({
     top<-getData()
     g<-ggplot(data=top)
@@ -100,6 +106,19 @@ getData<- reactive({
       theme(axis.text.x=element_text(angle=60,hjust=1))+
       xlab("")+ylab("Adjusted DPS")
   })
+
+#Create DPS vs Health plot
+  output$HealthPlot<-renderPlot({
+    top<-getData()
+    h<-ggplot(data=top,aes(x=top$Stamina,y=top$newDPS),color=top$TypeColor)
+    h+geom_point()+
+      geom_text(aes(label=top$nameCat),hjust=.1,vjust=1)+
+      theme_solarized()+
+      xlab("Health")+ylab("Adjusted DPS")
+  }) 
+  
+  
+  
   
 #Create output of observations    
   output$DPStable <- renderTable({
@@ -114,7 +133,8 @@ getData<- reactive({
   datasetInput <- reactive({
     switch(input$dataset,
            "Top Counters" = getData(),
-           "Full Dataset" = pogo
+           "Full Dataset" = pogo,
+           "Type Advantages"=advantages
            )
   })
   output$downloadData <- downloadHandler(
@@ -125,6 +145,8 @@ getData<- reactive({
       write.csv(datasetInput(), file)
     }
   )
+
+      
   
 #End of app
 })

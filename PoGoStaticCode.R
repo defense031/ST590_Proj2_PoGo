@@ -103,3 +103,5 @@ filterData<-filter(filterData,Legendary==FALSE)
 length(filterData$Pokemon)
 
 
+
+
